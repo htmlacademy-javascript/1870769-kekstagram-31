@@ -1,8 +1,9 @@
 // Функция для проверки длины строки.
 const getStringCheck = (string, length) =>
   string.replaceAll(' ', '').length <= length;
+
 // Функция для проверки, является ли строка палиндромом.
-const isPolidrome = function (string) {
+const getPolidrome = function (string) {
   const normalizedString = string.toLowerCase().replaceAll(' ', '');
   let reversString = '';
 
