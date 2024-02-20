@@ -1,6 +1,7 @@
 // Функция для проверки длины строки.
 const getStringCheck = (string, length) =>
   string.replaceAll(' ', '').length <= length;
+getStringCheck('проверка', 8);
 
 // // Функция для проверки, является ли строка палиндромом.
 const getPolidrome = function (string) {
@@ -12,7 +13,7 @@ const getPolidrome = function (string) {
   }
   return reversString === normalizedString;
 };
-
+getPolidrome('довод');
 // Дополнительное задание
 // Функция для переработки строки в число
 const extractNumber = (string) => {
@@ -29,3 +30,4 @@ const extractNumber = (string) => {
   }
   return number > 0 ? number : NaN;
 };
+extractNumber('123');
