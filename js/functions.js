@@ -5,15 +5,12 @@ getStringCheck('проверка', 8);
 
 // // Функция для проверки, является ли строка палиндромом.
 const getPolidrome = function (string) {
-  const normalizedString = string.toLowerCase().replaceAll(' ', '');
-  let reversString = '';
+  string = string.toLowerCase().replaceAll(' ', '');
 
-  for (let i = normalizedString.length - 1; i >= 0; i--) {
-    reversString += normalizedString[i];
-  }
-  return reversString === normalizedString;
+  return string === string.split('').reverse().join('');
 };
-getPolidrome('довод');
+getPolidrome('А луна канула');
+
 // Дополнительное задание
 // Функция для переработки строки в число
 const extractNumber = (string) => {
