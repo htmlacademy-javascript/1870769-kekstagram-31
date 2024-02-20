@@ -2,7 +2,7 @@
 const getStringCheck = (string, length) =>
   string.replaceAll(' ', '').length <= length;
 
-// Функция для проверки, является ли строка палиндромом.
+// // Функция для проверки, является ли строка палиндромом.
 const getPolidrome = function (string) {
   const normalizedString = string.toLowerCase().replaceAll(' ', '');
   let reversString = '';
@@ -13,4 +13,19 @@ const getPolidrome = function (string) {
   return reversString === normalizedString;
 };
 
+// Дополнительное задание
+// Функция для переработки строки в число
+const extractNumber = (string) => {
+  if (typeof string !== 'string') {
+    string = string.toString();
+  }
 
+  let number = '';
+  for (let i = 0; i < string.length; i++) {
+    const num = parseInt(string[i], 10);
+    if (!Number.isNaN(num)) {
+      number += num;
+    }
+  }
+  return number > 0 ? number : NaN;
+};
