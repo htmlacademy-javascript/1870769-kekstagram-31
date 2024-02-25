@@ -1,19 +1,17 @@
 // Функция для проверки длины строки.
-const getStringCheck = (string, length) =>
+export const getStringCheck = (string, length) =>
   string.replaceAll(' ', '').length <= length;
-getStringCheck('проверка', 8);
 
 // // Функция для проверки, является ли строка палиндромом.
-const getPolidrome = function (string) {
+export const getPolidrome = function (string) {
   string = string.toLowerCase().replaceAll(' ', '');
 
   return string === string.split('').reverse().join('');
 };
-getPolidrome('А луна канула');
 
 // Дополнительное задание
 // Функция для переработки строки в число
-const extractNumber = (string) => {
+export const extractNumber = (string) => {
   if (typeof string !== 'string') {
     string = string.toString();
   }
@@ -27,4 +25,30 @@ const extractNumber = (string) => {
   }
   return number > 0 ? number : NaN;
 };
-extractNumber('123');
+
+// задание от наставника
+export const padStartRecursive = (source, size, additional) => {
+  if (source.length >= size) {
+    return source;
+  }
+  if (additional.length + source.length >= size) {
+    return additional.slice(0, size - source.length) + source;
+  }
+
+  return padStartRecursive(additional + source, size, additional);
+};
+
+export const padStartLoop = (source, size, additional) => {
+  if (source.length >= size) {
+    return source;
+  }
+  if (additional.length + source.length > size) {
+    return additional.slice(0, size - source.length) + source;
+  }
+
+  let result = additional + source;
+  while (result.length < size) {
+    result = additional.slice(0, size - result.length) + result;
+  }
+  return result;
+};
