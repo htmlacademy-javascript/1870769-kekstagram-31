@@ -118,6 +118,5 @@ const createProfile = () => {
   };
 };
 const res = Array.from({ length: SIMILAR_PROFILE_COUNT }, createProfile);
-console.log(JSON.stringify(res, null, 2));
 
-// res();
+res();
