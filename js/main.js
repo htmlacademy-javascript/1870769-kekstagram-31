@@ -60,6 +60,8 @@ const DESCRIPTION = [
 ];
 
 const SIMILAR_PROFILE_COUNT = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -95,7 +97,7 @@ const createProfile = () => {
     id: uniqueID,
     url: `photos/${uniquePhotoID}.jpg`,
     description: getRandomArrayElement(DESCRIPTION),
-    likes: getRandomInteger(15, 200),
+    likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
     comments: {
       id: uniqueCommentID,
       avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
