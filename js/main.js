@@ -76,7 +76,6 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const usedIds = new Set();
-const usedPhotoIds = new Set();
 const usedCommentIds = new Set();
 
 const getUniqueID = (values, max = SIMILAR_PROFILE_COUNT) => {
@@ -105,18 +104,16 @@ const createComment = () => {
 
 const createProfile = () => {
   const uniqueID = getUniqueID(usedIds);
-  const uniquePhotoID = getUniqueID(usedPhotoIds);
 
   const randomNumForComment = getRandomInteger(0, 30);
 
   return {
     id: uniqueID,
-    url: `photos/${uniquePhotoID}.jpg`,
+    url: `photos/${uniqueID}.jpg`,
     description: getRandomArrayElement(DESCRIPTION),
     likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
     comments: Array.from({ length: randomNumForComment }, createComment),
   };
 };
 const res = Array.from({ length: SIMILAR_PROFILE_COUNT }, createProfile);
-
 res();
