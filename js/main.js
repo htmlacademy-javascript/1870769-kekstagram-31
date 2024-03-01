@@ -64,6 +64,8 @@ const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const MIN_AVATAR_NUM = 1;
 const MAX_AVATAR_NUM = 6;
+const MIN_RANDOM_NUM_COMMENT = 0;
+const MAX_RANDOM_NUM_COMMENT = 30;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -75,23 +77,13 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const usedIds = new Set();
-const usedCommentIds = new Set();
+const getArrayFrom = (length, fnc) => Array.from({ length: length }, (_, index) => fnc(_, index + 1));
 
-const getUniqueID = (values, max = SIMILAR_PROFILE_COUNT) => {
-  let value;
-  do {
-    value = getRandomInteger(1, max);
-  } while (values.has(value));
-
-  values.add(value);
-
-  return value;
-};
-
+let uniqueCommentIDCounter = 10;
+const getUniqueCommentID = () => uniqueCommentIDCounter++;
 
 const createComment = () => {
-  const uniqueCommentID = getUniqueID(usedCommentIds, 10000);
+  const uniqueCommentID = getUniqueCommentID();
 
   const objComment = {
     id: uniqueCommentID,
@@ -102,18 +94,17 @@ const createComment = () => {
   return objComment;
 };
 
-const createProfile = () => {
-  const uniqueID = getUniqueID(usedIds);
+const createProfile = (_, index) => {
 
-  const randomNumForComment = getRandomInteger(0, 30);
+  const randomNumForComment = getRandomInteger(MIN_RANDOM_NUM_COMMENT, MAX_RANDOM_NUM_COMMENT);
 
   return {
-    id: uniqueID,
-    url: `photos/${uniqueID}.jpg`,
+    id: index,
+    url: `photos/${index}.jpg`,
     description: getRandomArrayElement(DESCRIPTION),
     likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-    comments: Array.from({ length: randomNumForComment }, createComment),
+    comments: getArrayFrom(randomNumForComment, createComment),
   };
 };
-const res = Array.from({ length: SIMILAR_PROFILE_COUNT }, createProfile);
+const res = getArrayFrom(SIMILAR_PROFILE_COUNT, createProfile);
 res();
