@@ -77,7 +77,7 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getArrayFrom = (length, fnc) => Array.from({ length: length }, (_, index) => fnc(_, index + 1));
+const getArrayFrom = (length, fnc) => Array.from({ length: length }, (_, index) => fnc(index + 1));
 
 let uniqueCommentIDCounter = 10;
 const getUniqueCommentID = () => uniqueCommentIDCounter++;
