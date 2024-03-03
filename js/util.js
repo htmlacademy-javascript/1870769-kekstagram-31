@@ -8,6 +8,6 @@ const getRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getArrayFrom = (length, fnc) => Array.from({ length: length }, (_, index) => fnc(index + 1));
+const getArrayFrom = (length, fnc) => Array.from({ length: length }, fnc);
 
 export { getRandomInteger, getRandomArrayElement, getArrayFrom };

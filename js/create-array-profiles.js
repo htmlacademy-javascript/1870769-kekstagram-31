@@ -39,5 +39,4 @@ const createProfile = (_, index) => {
   };
 };
 const getArrayProfiles = () => getArrayFrom(SIMILAR_PROFILE_COUNT, createProfile);
-console.log(getArrayProfiles());
 export { getArrayProfiles };
