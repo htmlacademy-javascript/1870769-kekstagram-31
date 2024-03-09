@@ -1,7 +1,7 @@
 const pictureConteiner = document.querySelector('.pictures');
 const pictureTeamplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const createPicture = ({ url, description, likes, comments, id }) => {
+const createPicture = ({ url, description, likes, comments }) => {
   const picture = pictureTeamplate.cloneNode(true);
 
   const pictureImg = picture.querySelector('.picture__img');
