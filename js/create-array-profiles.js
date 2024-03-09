@@ -38,5 +38,5 @@ const createProfile = (_, index) => {
     comments: getArrayFrom(randomNumForComment, createComment),
   };
 };
-const getArrayProfiles = () => getArrayFrom(SIMILAR_PROFILE_COUNT, createProfile);
-export { getArrayProfiles };
+const getArrayPhotoProfiles = () => getArrayFrom(SIMILAR_PROFILE_COUNT, createProfile);
+export { getArrayPhotoProfiles };
