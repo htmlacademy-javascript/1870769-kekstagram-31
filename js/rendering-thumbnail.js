@@ -19,8 +19,8 @@ const createPicture = ({ url, description, likes, comments }) => {
 const getRenderingThumbnail = (data) => {
   const fragment = document.createDocumentFragment();
 
-  data.forEach(({ url, description, likes, comments }) => {
-    fragment.append(createPicture({ url, description, likes, comments }));
+  data.forEach((dataElement) => {
+    fragment.append(createPicture(dataElement));
   });
 
   pictureContainerElement.append(fragment);
