@@ -1,4 +1,4 @@
-const pictureConteiner = document.querySelector('.pictures');
+const pictureContainerElement = document.querySelector('.pictures');
 const pictureTeamplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const createPicture = ({ url, description, likes, comments }) => {
@@ -23,7 +23,7 @@ const getRenderingThumbnail = (data) => {
     fragment.append(createPicture({ url, description, likes, comments }));
   });
 
-  pictureConteiner.append(fragment);
+  pictureContainerElement.append(fragment);
 };
 
 export { getRenderingThumbnail };
