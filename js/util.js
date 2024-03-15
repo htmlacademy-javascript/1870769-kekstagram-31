@@ -10,13 +10,15 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const getArrayFrom = (length, fnc) => Array.from({ length: length }, fnc);
 
-function createElement(tagName, className) {
+const createElement = (tagName, className) => {
   const element = document.createElement(tagName);
   element.classList.add(className);
   return element;
-}
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const getQuerySelector = (element, selector) => element.querySelector(selector);
 
-export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement };
+
+export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement, getQuerySelector };

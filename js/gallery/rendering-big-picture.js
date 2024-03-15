@@ -1,4 +1,5 @@
-import {createElement, isEscapeKey} from '../util.js';
+import {isEscapeKey, getQuerySelector} from '../util.js';
+import { createBigPictureComment } from './create-big-picture-comment.js';
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -7,51 +8,21 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const bigPictureContainerElement = document.querySelector('.big-picture');
-
-const createBigPictureComment = (profile) => {
-  const commentsList = bigPictureContainerElement.querySelector('.social__comments');
-
-  commentsList.innerHTML = '';
-  const commentElLi = createElement('li', 'social__comment');
-  const commentElImg = createElement('img', 'social__picture');
-  const commentElP = createElement('p', 'social__text');
-
-  profile.comments.forEach(({avatar, name, message}) => {
-    const fragment = document.createDocumentFragment();
-
-    commentElImg.src = avatar;
-    commentElImg.alt = name;
-    commentElP.textContent = message;
-
-    commentElLi.append(commentElImg);
-    commentElLi.append(commentElP);
-    fragment.append(commentElLi);
-    commentsList.append(fragment);
-  });
-
-  return commentsList;
-};
+const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
 
 const createBigPictureSocial = (profile) => {
-  const commentShowCount = bigPictureContainerElement.querySelector('.social__comment-shown-count');
-  const commentTotalCount = bigPictureContainerElement.querySelector('.social__comment-total-count');
-  const commentList = bigPictureContainerElement.querySelectorAll('.social__comment');
-  const likesCount = bigPictureContainerElement.querySelector('.likes-count');
-  const socialCaption = bigPictureContainerElement.querySelector('.social__caption');
-
-  socialCaption.textContent = profile.description;
-  likesCount.textContent = profile.likes;
-  commentShowCount.textContent = commentList.length;
-  commentTotalCount.textContent = profile.comments.length;
-
   createBigPictureComment(profile);
+
+  const commentList = bigPictureContainerElement.querySelectorAll('.social__comment');
+
+  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = commentList.length;
+  getQuerySelector(bigPictureContainerElement, '.social__comment-total-count').textContent = profile.comments.length;
+  getQuerySelector(bigPictureContainerElement, '.likes-count').textContent = profile.likes;
+  getQuerySelector(bigPictureContainerElement, '.social__caption').textContent = profile.description;
 };
 
 const renderBigPicture = (photo) => {
-  const bigPictureImg = bigPictureContainerElement.querySelector('.big-picture__img > img');
-
-  bigPictureImg.src = photo.url;
+  getQuerySelector(bigPictureContainerElement, '.big-picture__img > img').src = photo.url;
 
   createBigPictureSocial(photo);
 };
@@ -59,7 +30,6 @@ const renderBigPicture = (photo) => {
 function openBigPicture (photoProfile) {
   bigPictureContainerElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-
 
   document.addEventListener('keydown', onDocumentKeydown);
 
