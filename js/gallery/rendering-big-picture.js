@@ -33,7 +33,7 @@ const createBigPictureComment = (profile) => {
   return commentsList;
 };
 
-function createBigPictureSocial (profile) {
+const createBigPictureSocial = (profile) => {
   const commentShowCount = bigPictureContainerElement.querySelector('.social__comment-shown-count');
   const commentTotalCount = bigPictureContainerElement.querySelector('.social__comment-total-count');
   const commentList = bigPictureContainerElement.querySelectorAll('.social__comment');
@@ -46,19 +46,22 @@ function createBigPictureSocial (profile) {
   commentTotalCount.textContent = profile.comments.length;
 
   createBigPictureComment(profile);
-}
+};
 
-function renderBigPicture (photo) {
+const renderBigPicture = (photo) => {
   const bigPictureImg = bigPictureContainerElement.querySelector('.big-picture__img > img');
 
   bigPictureImg.src = photo.url;
 
   createBigPictureSocial(photo);
-}
+};
 
 function openBigPicture (photoProfile) {
   bigPictureContainerElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  bigPictureContainerElement.querySelector('.social__comment-count').classList.add('hidden');
+  bigPictureContainerElement.querySelector('.comments-loader').classList.add('hidden');
+
 
   document.addEventListener('keydown', onDocumentKeydown);
 
@@ -69,7 +72,8 @@ function closeBigPicture () {
   bigPictureContainerElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-
+  bigPictureContainerElement.querySelector('.social__comment-count').classList.remove('hidden');
+  bigPictureContainerElement.querySelector('.comments-loader').classList.remove('hidden');
 }
 
 export { openBigPicture, closeBigPicture };
