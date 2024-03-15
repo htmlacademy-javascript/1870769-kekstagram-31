@@ -59,8 +59,6 @@ const renderBigPicture = (photo) => {
 function openBigPicture (photoProfile) {
   bigPictureContainerElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  bigPictureContainerElement.querySelector('.social__comment-count').classList.add('hidden');
-  bigPictureContainerElement.querySelector('.comments-loader').classList.add('hidden');
 
 
   document.addEventListener('keydown', onDocumentKeydown);
@@ -72,8 +70,6 @@ function closeBigPicture () {
   bigPictureContainerElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  bigPictureContainerElement.querySelector('.social__comment-count').classList.remove('hidden');
-  bigPictureContainerElement.querySelector('.comments-loader').classList.remove('hidden');
 }
 
 export { openBigPicture, closeBigPicture };
