@@ -10,4 +10,13 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const getArrayFrom = (length, fnc) => Array.from({ length: length }, fnc);
 
-export { getRandomInteger, getRandomArrayElement, getArrayFrom };
+function createElement(tagName, className) {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  return element;
+}
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement };

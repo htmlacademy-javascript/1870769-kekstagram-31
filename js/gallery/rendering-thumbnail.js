@@ -1,8 +1,12 @@
+
 const pictureContainerElement = document.querySelector('.pictures');
 const pictureTeamplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const createPicture = ({ url, description, likes, comments }) => {
+const createPicture = ({ url, description, likes, comments, id }) => {
   const picture = pictureTeamplate.cloneNode(true);
+
+  picture.href = url;
+  picture.dataset.id = id;
 
   const pictureImg = picture.querySelector('.picture__img');
   const pictureLikes = picture.querySelector('.picture__likes');
