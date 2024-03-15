@@ -1,7 +1,7 @@
 import { getDataArrayProfiles } from './data';
 import { getRandomInteger, getRandomArrayElement, getArrayFrom } from './util';
 
-const {MESSAGES, DESCRIPTION, NAMES } = getDataArrayProfiles();
+const { MESSAGES, DESCRIPTION, NAMES } = getDataArrayProfiles();
 
 const SIMILAR_PROFILE_COUNT = 25;
 const MIN_LIKES = 15;
@@ -26,8 +26,7 @@ const createComment = () => {
   return objComment;
 };
 
-const createProfile = (_, index) => {
-
+const createPhotoProfile = (_, index) => {
   const randomNumForComment = getRandomInteger(MIN_RANDOM_NUM_COMMENT, MAX_RANDOM_NUM_COMMENT);
 
   return {
@@ -38,5 +37,5 @@ const createProfile = (_, index) => {
     comments: getArrayFrom(randomNumForComment, createComment),
   };
 };
-const getArrayPhotoProfiles = () => getArrayFrom(SIMILAR_PROFILE_COUNT, createProfile);
+const getArrayPhotoProfiles = () => getArrayFrom(SIMILAR_PROFILE_COUNT, createPhotoProfile);
 export { getArrayPhotoProfiles };
