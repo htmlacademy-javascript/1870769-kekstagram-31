@@ -1,5 +1,12 @@
 import {isEscapeKey, getQuerySelector} from '../util.js';
-import { createBigPictureComment } from './create-big-picture-comment.js';
+import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
+
+const bigPictureContainer = getQuerySelector(document, '.big-picture');
+
+const onBigPictureClose = (evt) => {
+  evt.preventDefault();
+  closeBigPicture();
+};
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -8,38 +15,32 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
-
-const createBigPictureSocial = (profile) => {
-  createBigPictureComment(profile);
-
-  const commentList = bigPictureContainerElement.querySelectorAll('.social__comment');
-
-  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = commentList.length;
-  getQuerySelector(bigPictureContainerElement, '.social__comment-total-count').textContent = profile.comments.length;
-  getQuerySelector(bigPictureContainerElement, '.likes-count').textContent = profile.likes;
-  getQuerySelector(bigPictureContainerElement, '.social__caption').textContent = profile.description;
-};
-
 const renderBigPicture = (photo) => {
-  getQuerySelector(bigPictureContainerElement, '.big-picture__img > img').src = photo.url;
+  createBigPictureComment(photo);
 
-  createBigPictureSocial(photo);
+  getQuerySelector(bigPictureContainer, '.big-picture__img > img').src = photo.url;
+  getQuerySelector(bigPictureContainer, '.social__comment-total-count').textContent = photo.comments.length;
+  getQuerySelector(bigPictureContainer, '.likes-count').textContent = photo.likes;
+  getQuerySelector(bigPictureContainer, '.social__caption').textContent = photo.description;
 };
 
 function openBigPicture (photoProfile) {
-  bigPictureContainerElement.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  bigPictureContainer.classList.remove('hidden');
 
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
+  document.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClose);
 
   renderBigPicture(photoProfile);
 }
 
 function closeBigPicture () {
-  bigPictureContainerElement.classList.add('hidden');
+  bigPictureContainer.classList.add('hidden');
+
   document.body.classList.remove('modal-open');
+  document.removeEventListener('click', onBigPictureClose);
   document.removeEventListener('keydown', onDocumentKeydown);
+  clearComments();
 }
 
 export { openBigPicture, closeBigPicture };

@@ -1,56 +1,74 @@
-import { createElement, getQuerySelector } from '../util';
-
-const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
-const buttonCommentsLoader = getQuerySelector(bigPictureContainerElement, '.social__comments-loader');
-const commentsList = getQuerySelector(bigPictureContainerElement, '.social__comments');
-
-const fragment = document.createDocumentFragment();
+import { getQuerySelector } from '../util';
 
 let count = 0;
+let showMoreCommentsCallback = null;
 
-const createComment = (comment) => {
-  const commentLiEl = createElement('li', 'social__comment');
-  const commentImgEl = createElement('img', 'social__picture');
-  const commentParagraphEl = createElement('p', 'social__text');
+const STEP_ADD_COMMENT = 5;
 
-  buttonCommentsLoader.classList.add('hidden');
+const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
+const buttonCommentsLoaderElement = getQuerySelector(bigPictureContainerElement, '.social__comments-loader');
+const socialCommentTemplate = getQuerySelector(bigPictureContainerElement, '.social__comment');
 
-  commentImgEl.alt = comment.name;
-  commentImgEl.src = comment.avatar;
-  commentParagraphEl.textContent = comment.message;
+const createComment = (comment, fragment) => {
+  const socialComment = socialCommentTemplate.cloneNode(true);
 
-  commentLiEl.append(commentImgEl);
-  commentLiEl.append(commentParagraphEl);
-  fragment.append(commentLiEl);
+  getQuerySelector(socialComment, '.social__text').textContent = comment.message;
+  getQuerySelector(socialComment, '.social__picture').alt = comment.name;
+  getQuerySelector(socialComment, '.social__picture').src = comment.avatar;
+
+  fragment.append(socialComment);
+};
+
+const generateShowMoreCallback = ({ comments, fragment, commentsList }) => () => {
+  const remainingComments = comments.slice(count, count + STEP_ADD_COMMENT);
+  count += STEP_ADD_COMMENT;
+
+  remainingComments.forEach((comment) => {
+    createComment(comment, fragment);
+    commentsList.append(fragment);
+  });
+
+  const commentShowLength = document.querySelectorAll('.social__comment').length;
+
+  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = commentShowLength;
+
+  if (commentShowLength >= comments.length) {
+    buttonCommentsLoaderElement.classList.add('hidden');
+  } else {
+    buttonCommentsLoaderElement.classList.remove('hidden');
+  }
 };
 
 const createBigPictureComment = ({ comments }) => {
+  const commentsList = getQuerySelector(bigPictureContainerElement, '.social__comments');
+  const fragment = document.createDocumentFragment();
+
   commentsList.innerHTML = '';
 
-  comments.slice(0, 5).forEach(createComment);
-  count = 5;
+  count += STEP_ADD_COMMENT;
 
+  const initialComments = comments.slice(0, count);
+  initialComments.forEach((comment) => createComment(comment,fragment));
   commentsList.append(fragment);
 
-  if (comments.length > 5) {
-    buttonCommentsLoader.classList.remove('hidden');
+  if (initialComments.length >= comments.length) {
+    buttonCommentsLoaderElement.classList.add('hidden');
+  } else {
+    buttonCommentsLoaderElement.classList.remove('hidden');
   }
 
-  buttonCommentsLoader.addEventListener('click', () => {
-    const remainingComments = comments.slice(count, count + 5);
-
-    remainingComments.forEach((comment) => {
-      createComment(comment);
-      count++;
-
-      if (count >= comments.length) {
-        buttonCommentsLoader.classList.add('hidden');
-      }
-    });
-  });
+  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = initialComments.length;
+  showMoreCommentsCallback = generateShowMoreCallback({ comments, fragment, commentsList, initialComments });
+  buttonCommentsLoaderElement.addEventListener('click', showMoreCommentsCallback);
 
   return commentsList;
 };
 
-export { createBigPictureComment };
+const clearComments = () => {
+  buttonCommentsLoaderElement.removeEventListener('click', showMoreCommentsCallback);
+  showMoreCommentsCallback = null;
+  count = 0;
+};
+
+export { createBigPictureComment, clearComments };
 
