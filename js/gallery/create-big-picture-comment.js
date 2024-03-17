@@ -2,12 +2,12 @@ import { getQuerySelector } from '../util';
 
 const STEP_ADD_COMMENT = 5;
 
-let count = 0;
-let showMoreCommentsCallback = null;
-
 const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
 const buttonCommentsLoaderElement = getQuerySelector(bigPictureContainerElement, '.social__comments-loader');
 const socialCommentTemplate = getQuerySelector(bigPictureContainerElement, '.social__comment');
+
+let count = 0;
+let showMoreCommentsCallback = null;
 
 const createComment = (comment, fragment) => {
   const socialComment = socialCommentTemplate.cloneNode(true);

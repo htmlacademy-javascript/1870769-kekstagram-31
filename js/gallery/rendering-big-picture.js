@@ -1,4 +1,4 @@
-import {isEscapeKey, getQuerySelector} from '../util.js';
+import { isEscapeKey, getQuerySelector } from '../util.js';
 import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
 
 const bigPictureContainer = getQuerySelector(document, '.big-picture');
