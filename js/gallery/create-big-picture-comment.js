@@ -1,9 +1,9 @@
 import { getQuerySelector } from '../util';
 
+const STEP_ADD_COMMENT = 5;
+
 let count = 0;
 let showMoreCommentsCallback = null;
-
-const STEP_ADD_COMMENT = 5;
 
 const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
 const buttonCommentsLoaderElement = getQuerySelector(bigPictureContainerElement, '.social__comments-loader');
