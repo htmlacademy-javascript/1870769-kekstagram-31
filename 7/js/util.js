@@ -1,0 +1,24 @@
+const getRandomInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+};
+
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+const getArrayFrom = (length, fnc) => Array.from({ length: length }, fnc);
+
+const createElement = (tagName, className) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  return element;
+};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const getQuerySelector = (element, selector) => element.querySelector(selector);
+
+
+export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement, getQuerySelector };
