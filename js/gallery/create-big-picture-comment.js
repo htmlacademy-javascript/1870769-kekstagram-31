@@ -1,10 +1,8 @@
-import { getQuerySelector } from '../util';
-
 const STEP_ADD_COMMENT = 5;
 
-const bigPictureContainerElement = getQuerySelector(document, '.big-picture');
-const buttonCommentsLoaderElement = getQuerySelector(bigPictureContainerElement, '.social__comments-loader');
-const socialCommentTemplate = getQuerySelector(bigPictureContainerElement, '.social__comment');
+const bigPictureContainerElement = document.querySelector('.big-picture');
+const buttonCommentsLoaderElement = bigPictureContainerElement.querySelector('.social__comments-loader');
+const socialCommentTemplate = bigPictureContainerElement.querySelector('.social__comment');
 
 let count = 0;
 let showMoreCommentsCallback = null;
@@ -12,9 +10,9 @@ let showMoreCommentsCallback = null;
 const createComment = (comment, fragment) => {
   const socialComment = socialCommentTemplate.cloneNode(true);
 
-  getQuerySelector(socialComment, '.social__text').textContent = comment.message;
-  getQuerySelector(socialComment, '.social__picture').alt = comment.name;
-  getQuerySelector(socialComment, '.social__picture').src = comment.avatar;
+  socialComment.querySelector('.social__text').textContent = comment.message;
+  socialComment.querySelector('.social__picture').alt = comment.name;
+  socialComment.querySelector('.social__picture').src = comment.avatar;
 
   fragment.append(socialComment);
 };
@@ -29,8 +27,7 @@ const generateShowMoreCallback = ({ comments, fragment, commentsList }) => () =>
   });
 
   const commentShowLength = document.querySelectorAll('.social__comment').length;
-
-  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = commentShowLength;
+  bigPictureContainerElement.querySelector('.social__comment-shown-count').textContent = commentShowLength;
 
   if (commentShowLength >= comments.length) {
     buttonCommentsLoaderElement.classList.add('hidden');
@@ -40,7 +37,7 @@ const generateShowMoreCallback = ({ comments, fragment, commentsList }) => () =>
 };
 
 const createBigPictureComment = ({ comments }) => {
-  const commentsList = getQuerySelector(bigPictureContainerElement, '.social__comments');
+  const commentsList = bigPictureContainerElement.querySelector('.social__comments');
   const fragment = document.createDocumentFragment();
 
   commentsList.innerHTML = '';
@@ -57,7 +54,7 @@ const createBigPictureComment = ({ comments }) => {
     buttonCommentsLoaderElement.classList.remove('hidden');
   }
 
-  getQuerySelector(bigPictureContainerElement, '.social__comment-shown-count').textContent = initialComments.length;
+  bigPictureContainerElement.querySelector('.social__comment-shown-count').textContent = initialComments.length;
   showMoreCommentsCallback = generateShowMoreCallback({ comments, fragment, commentsList, initialComments });
   buttonCommentsLoaderElement.addEventListener('click', showMoreCommentsCallback);
 

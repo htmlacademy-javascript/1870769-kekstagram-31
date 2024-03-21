@@ -1,7 +1,7 @@
-import { isEscapeKey, getQuerySelector } from '../util.js';
+import { isEscapeKey } from '../util.js';
 import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
 
-const bigPictureContainer = getQuerySelector(document, '.big-picture');
+const bigPictureContainer = document.querySelector('.big-picture');
 
 const onBigPictureClose = (evt) => {
   evt.preventDefault();
@@ -18,10 +18,10 @@ const onDocumentKeydown = (evt) => {
 const renderBigPicture = (photo) => {
   createBigPictureComment(photo);
 
-  getQuerySelector(bigPictureContainer, '.big-picture__img > img').src = photo.url;
-  getQuerySelector(bigPictureContainer, '.social__comment-total-count').textContent = photo.comments.length;
-  getQuerySelector(bigPictureContainer, '.likes-count').textContent = photo.likes;
-  getQuerySelector(bigPictureContainer, '.social__caption').textContent = photo.description;
+  bigPictureContainer.querySelector('.big-picture__img > img').src = photo.url;
+  bigPictureContainer.querySelector('.social__comment-total-count').textContent = photo.comments.length;
+  bigPictureContainer.querySelector('.likes-count').textContent = photo.likes;
+  bigPictureContainer.querySelector('.social__caption').textContent = photo.description;
 };
 
 function openBigPicture (photoProfile) {

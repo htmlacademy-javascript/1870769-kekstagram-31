@@ -18,7 +18,4 @@ const createElement = (tagName, className) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getQuerySelector = (element, selector) => element.querySelector(selector);
-
-
-export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement, getQuerySelector };
+export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement };
