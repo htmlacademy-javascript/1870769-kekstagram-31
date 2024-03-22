@@ -26,10 +26,10 @@ const generateShowMoreCallback = ({ comments, fragment, commentsList }) => () =>
     commentsList.append(fragment);
   });
 
-  const commentShowLength = document.querySelectorAll('.social__comment').length;
-  bigPictureContainerElement.querySelector('.social__comment-shown-count').textContent = commentShowLength;
+  const commentShowLengthElements = document.querySelectorAll('.social__comment').length;
+  bigPictureContainerElement.querySelector('.social__comment-shown-count').textContent = commentShowLengthElements;
 
-  if (commentShowLength >= comments.length) {
+  if (commentShowLengthElements >= comments.length) {
     buttonCommentsLoaderElement.classList.add('hidden');
   } else {
     buttonCommentsLoaderElement.classList.remove('hidden');

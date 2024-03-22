@@ -1,7 +1,7 @@
-import { isEscapeKey } from '../util.js';
+import { isEscapeKey, openModal,closeModal } from '../util.js';
 import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
 
-const bigPictureContainer = document.querySelector('.big-picture');
+const bigPictureContainerElement = document.querySelector('.big-picture');
 
 const onBigPictureClose = (evt) => {
   evt.preventDefault();
@@ -18,28 +18,25 @@ const onDocumentKeydown = (evt) => {
 const renderBigPicture = (photo) => {
   createBigPictureComment(photo);
 
-  bigPictureContainer.querySelector('.big-picture__img > img').src = photo.url;
-  bigPictureContainer.querySelector('.social__comment-total-count').textContent = photo.comments.length;
-  bigPictureContainer.querySelector('.likes-count').textContent = photo.likes;
-  bigPictureContainer.querySelector('.social__caption').textContent = photo.description;
+  bigPictureContainerElement.querySelector('.big-picture__img > img').src = photo.url;
+  bigPictureContainerElement.querySelector('.social__comment-total-count').textContent = photo.comments.length;
+  bigPictureContainerElement.querySelector('.likes-count').textContent = photo.likes;
+  bigPictureContainerElement.querySelector('.social__caption').textContent = photo.description;
 };
 
 function openBigPicture (photoProfile) {
-  bigPictureContainer.classList.remove('hidden');
-
-  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   document.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClose);
 
+  openModal(bigPictureContainerElement);
   renderBigPicture(photoProfile);
 }
 
 function closeBigPicture () {
-  bigPictureContainer.classList.add('hidden');
-
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('click', onBigPictureClose);
   document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', onBigPictureClose);
+
+  closeModal(bigPictureContainerElement);
   clearComments();
 }
 
