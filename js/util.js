@@ -18,7 +18,22 @@ const createElement = (tagName, className) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getQuerySelector = (element, selector) => element.querySelector(selector);
+const openModal = (element) => {
+  element.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+};
 
+const closeModal = (element) => {
+  element.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
 
-export { getRandomInteger, getRandomArrayElement, getArrayFrom, isEscapeKey, createElement, getQuerySelector };
+export {
+  getRandomInteger,
+  getRandomArrayElement,
+  getArrayFrom,
+  isEscapeKey,
+  createElement,
+  openModal,
+  closeModal
+};
