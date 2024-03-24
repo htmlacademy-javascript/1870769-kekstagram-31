@@ -1,5 +1,4 @@
 import { openModal, closeModal, isEscapeKey } from '../util.js';
-import { formValidation } from './validation-form.js';
 import { clickControllBigger, clickControllSmaller } from './scale.js';
 import { initializeImageEffects, closeSlider } from './effect-on-image.js';
 
@@ -21,7 +20,6 @@ const onBigPictureClose = (evt) => {
 
 function openUploadForm () {
   openModal(imgUploadOverlayElement);
-  formValidation();
   initializeImageEffects();
 
   document.addEventListener('keydown', onDocumentKeydown);
