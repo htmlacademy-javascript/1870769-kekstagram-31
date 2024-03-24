@@ -4,12 +4,8 @@ const previewImage = document.querySelector('.img-upload__preview');
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectItemElements = document.querySelectorAll('.effects__item');
 
-let sliderInitialized = false;
 
 const initializeSlider = () => {
-  if (sliderInitialized) {
-    return;
-  }
   noUiSlider.create(sliderElement, {
     range: {
       min: 0,
@@ -30,7 +26,6 @@ const initializeSlider = () => {
       },
     },
   });
-  sliderInitialized = true;
 
   return sliderElement;
 };
@@ -90,11 +85,10 @@ const initializeEffects = (slidElem) => {
 const initializeImageEffects = () => {
   const slider = initializeSlider();
   initializeEffects(slider);
-
-  return slider;
 };
 
-const closeSlider = () => initializeImageEffects().noUiSlider.destroy();
-
+const closeSlider = () => {
+  sliderElement.noUiSlider.destroy();
+};
 
 export { initializeImageEffects, closeSlider };
