@@ -1,8 +1,10 @@
 const uploadFormElement = document.querySelector('.img-upload__form');
-const hashtagElement = document.querySelector('.text__hashtags');
+const hashtagElement = uploadFormElement.querySelector('.text__hashtags');
+const textDescriptionElement = uploadFormElement.querySelector('.text__description');
 
 const LIMIT_HASHTAG = 5;
 const patternHashtag = /^#[a-zа-яё0-9]{1,19}$/i;
+const LIMIT_DESCRIPTION_LENGTH = 140;
 
 const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
@@ -12,6 +14,7 @@ const pristine = new Pristine(uploadFormElement, {
 });
 
 const isValidLengthHashtags = (value) => value.split(' ').length <= LIMIT_HASHTAG;
+const isValidDescription = (value) => value.length <= LIMIT_DESCRIPTION_LENGTH;
 
 const isValidHashtags = (value) => {
   if (value === '') {
@@ -27,15 +30,8 @@ pristine.addValidator(hashtagElement, isValidLengthHashtags, `Хэштегов �
 pristine.addValidator(hashtagElement, isValidHashtags, 'Не валидный хэштег');
 pristine.addValidator(hashtagElement, isUniqueHashtag, 'Хэштеги повторяются');
 
+pristine.addValidator(textDescriptionElement, isValidDescription, 'Комментарий слишком длинный');
+
 hashtagElement.addEventListener('input', () => {
   pristine.validate();
 });
-
-const formValidation = (evt) => {
-  if (pristine.validate()) {
-    evt.preventDefault();
-    uploadFormElement.submit();
-  }
-};
-
-export { formValidation };
