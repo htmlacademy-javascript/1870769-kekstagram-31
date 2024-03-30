@@ -7,21 +7,9 @@ const Method = {
   GET: 'GET',
   POST: 'POST'
 };
-const ErrorText = {
-  [Method.GET]: 'Не удалось загрузить данные. Попробуйте еще раз',
-  [Method.POST]: 'Не удалось отправить данные формы'
-};
 
 const load = (route, method = Method.GET, body = null) => fetch(`${BASE_URL}${route}`, { method, body })
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  })
-  .catch(() => {
-    throw new Error(ErrorText[method]);
-  });
+  .then((response) => response.json());
 
 const getData = () => load(Route.GET_DATA);
 const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);

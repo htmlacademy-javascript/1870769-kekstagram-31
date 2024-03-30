@@ -1,4 +1,4 @@
-import { getRenderingThumbnail } from '../rendering-thumbnail.js';
+import { getRenderingThumbnail } from './rendering-thumbnail.js';
 import { openBigPicture } from './rendering-big-picture.js';
 import { getData } from '../api.js';
 
@@ -18,4 +18,12 @@ getData()
         }
       }
     });
+  })
+  .catch(() => {
+    const errortemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+    document.body.append(errortemplate);
+
+    setTimeout(() => {
+      document.body.removeChild(document.querySelector('.data-error'));
+    }, 5000);
   });
