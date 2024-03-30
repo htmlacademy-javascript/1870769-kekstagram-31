@@ -1,4 +1,3 @@
-
 const pictureContainerElement = document.querySelector('.pictures');
 const pictureTeamplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -8,14 +7,14 @@ const createPicture = ({ url, description, likes, comments, id }) => {
   picture.href = url;
   picture.dataset.id = id;
 
-  const pictureImg = picture.querySelector('.picture__img');
-  const pictureLikes = picture.querySelector('.picture__likes');
-  const pictureComments = picture.querySelector('.picture__comments');
+  const pictureImgElement = picture.querySelector('.picture__img');
+  const pictureLikesElement = picture.querySelector('.picture__likes');
+  const pictureCommentsElement = picture.querySelector('.picture__comments');
 
-  pictureImg.src = url;
-  pictureImg.alt = description;
-  pictureLikes.textContent = likes;
-  pictureComments.textContent = comments.length;
+  pictureImgElement.src = url;
+  pictureImgElement.alt = description;
+  pictureLikesElement.textContent = likes;
+  pictureCommentsElement.textContent = comments.length;
 
   return picture;
 };

@@ -1,20 +1,21 @@
-import { getArrayPhotoProfiles } from '../create-array-photo-profiles.js';
 import { getRenderingThumbnail } from '../rendering-thumbnail.js';
 import { openBigPicture } from './rendering-big-picture.js';
+import { getData } from '../api.js';
 
-const data = getArrayPhotoProfiles();
+getData()
+  .then((data) => {
+    getRenderingThumbnail(data);
 
-getRenderingThumbnail(data);
+    document.querySelector('.pictures').addEventListener('click', (evt) => {
+      const parent = evt.target.parentNode;
 
-document.querySelector('.pictures').addEventListener('click', (evt) => {
-  const parent = evt.target.parentNode;
+      if (parent?.dataset?.id) {
+        evt.preventDefault();
+        const profile = data.find((item) => item.id.toString() === parent.dataset.id);
 
-  if (parent?.dataset?.id) {
-    evt.preventDefault();
-    const profile = data.find((item) => item.id.toString() === parent.dataset.id);
-
-    if (profile) {
-      openBigPicture(profile);
-    }
-  }
-});
+        if (profile) {
+          openBigPicture(profile);
+        }
+      }
+    });
+  });
