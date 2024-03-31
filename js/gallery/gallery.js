@@ -20,8 +20,8 @@ getData()
     });
   })
   .catch(() => {
-    const errortemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-    document.body.append(errortemplate);
+    const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+    document.body.append(errorTemplate);
 
     setTimeout(() => {
       document.body.removeChild(document.querySelector('.data-error'));

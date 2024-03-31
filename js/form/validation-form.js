@@ -27,7 +27,7 @@ const isValidHashtags = (value) => {
 const isUniqueHashtag = (value) => new Set(value.split(' ')).size === value.split(' ').length;
 
 pristine.addValidator(hashtagElement, isValidLengthHashtags, `Хэштегов больше ${LIMIT_HASHTAG}`);
-pristine.addValidator(hashtagElement, isValidHashtags, 'Не валидный хэштег');
+pristine.addValidator(hashtagElement, isValidHashtags, 'введён невалидный хэштег');
 pristine.addValidator(hashtagElement, isUniqueHashtag, 'Хэштеги повторяются');
 
 pristine.addValidator(textDescriptionElement, isValidDescription, 'Комментарий слишком длинный');
@@ -35,3 +35,5 @@ pristine.addValidator(textDescriptionElement, isValidDescription, 'Коммен�
 hashtagElement.addEventListener('input', () => {
   pristine.validate();
 });
+
+export { pristine };
