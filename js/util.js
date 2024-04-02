@@ -6,16 +6,6 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const getArrayFrom = (length, fnc) => Array.from({ length: length }, fnc);
-
-const createElement = (tagName, className) => {
-  const element = document.createElement(tagName);
-  element.classList.add(className);
-  return element;
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const openModal = (element) => {
@@ -30,10 +20,7 @@ const closeModal = (element) => {
 
 export {
   getRandomInteger,
-  getRandomArrayElement,
-  getArrayFrom,
   isEscapeKey,
-  createElement,
   openModal,
   closeModal
 };

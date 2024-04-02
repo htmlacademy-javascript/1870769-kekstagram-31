@@ -1,4 +1,4 @@
-import { EffectsSetting } from './enum-effects';
+import { EffectsSetting } from './enum-effects.js';
 
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');

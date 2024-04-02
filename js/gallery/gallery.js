@@ -1,20 +1,31 @@
-import { getArrayPhotoProfiles } from '../create-array-photo-profiles.js';
-import { getRenderingThumbnail } from '../rendering-thumbnail.js';
-import { openBigPicture } from './rendering-big-picture.js';
+// import { getRenderingThumbnail } from './rendering-thumbnail.js';
+// import { openBigPicture } from './rendering-big-picture.js';
+// import { getData } from '../api.js';
 
-const data = getArrayPhotoProfiles();
+// const picteresElement = document.querySelector('.pictures');
 
-getRenderingThumbnail(data);
+// const TIME_CLEAR = 5000;
 
-document.querySelector('.pictures').addEventListener('click', (evt) => {
-  const parent = evt.target.parentNode;
+// getData()
+//   .then((data) => {
+//     getRenderingThumbnail(data);
+//     picteresElement.addEventListener('click', (evt) => {
+//       const targetElement = evt.target.closest('.picture');
 
-  if (parent?.dataset?.id) {
-    evt.preventDefault();
-    const profile = data.find((item) => item.id.toString() === parent.dataset.id);
+//       if (targetElement?.dataset?.id) {
+//         evt.preventDefault();
+//         const photo = data.find((item) => item.id.toString() === targetElement.dataset.id);
 
-    if (profile) {
-      openBigPicture(profile);
-    }
-  }
-});
+//         if (photo) {
+//           openBigPicture(photo);
+//         }
+//       }
+//     });
+//   })
+//   .catch(() => {
+//     const errorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+//     document.body.append(errorTemplate);
+//     setTimeout(() => {
+//       document.body.removeChild(document.querySelector('.data-error'));
+//     }, TIME_CLEAR);
+//   });

@@ -34,4 +34,9 @@ const handleScaleInputChange = () => {
 };
 scaleControlValueElement.addEventListener('input', handleScaleInputChange);
 
-export { clickControllBigger, clickControllSmaller };
+const resetScale = () => {
+  imgPreviewElement.style = '';
+  currentValue = SCALE_VALUE_DEFAULT_PERCENTAGE;
+};
+
+export { clickControllBigger, clickControllSmaller, resetScale };

@@ -10,7 +10,7 @@ const onBigPictureClose = (evt) => {
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    evt.preventDefault();
+    evt.stopPropagation();
     closeBigPicture();
   }
 };
@@ -40,4 +40,4 @@ function closeBigPicture () {
   clearComments();
 }
 
-export { openBigPicture, closeBigPicture };
+export { openBigPicture };
