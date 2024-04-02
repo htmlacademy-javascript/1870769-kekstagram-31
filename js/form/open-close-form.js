@@ -12,6 +12,18 @@ const imgUploadButton = imgUploadOverlayElement.querySelector('.img-upload__subm
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt) && !imgUploadDescription.contains(document.activeElement) && !imgUploadHashtag.contains(document.activeElement)) {
+    evt.preventDefault();
+    closeUploadForm();
+  }
+};
+
+const onBigPictureClose = (evt) => {
+  evt.preventDefault();
+  closeUploadForm();
+};
+
 const onSuccessTemplateClickClose = (evt) => {
   if (evt.target.classList.contains('success__button') || evt.target.classList.contains('success')) {
     document.body.removeChild(successTemplate);
@@ -28,18 +40,17 @@ const onSuccessTemplateKeydown = (evt) => {
   }
 };
 
-errorTemplate.addEventListener('click', (evt) => {
+const onErrorTemplateClickClose = (evt) => {
   if (evt.target.classList.contains('error__button') || evt.target.classList.contains('error')) {
     document.body.removeChild(errorTemplate);
   }
-});
-
-errorTemplate.addEventListener('keydown', (evt) => {
+};
+const onErrorTemplateKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
     document.body.removeChild(errorTemplate);
   }
-});
+};
 
 const resetFormData = () => {
   pristine.reset();
@@ -47,17 +58,17 @@ const resetFormData = () => {
   document.querySelector('.img-upload__form').reset();
 };
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && !imgUploadDescription.contains(document.activeElement) && !imgUploadHashtag.contains(document.activeElement)) {
-    evt.preventDefault();
-    closeUploadForm();
-  }
-};
-
-const onBigPictureClose = (evt) => {
-  evt.preventDefault();
-  closeUploadForm();
-};
+// errorTemplate.addEventListener('click', (evt) => {
+//   if (evt.target.classList.contains('error__button') || evt.target.classList.contains('error')) {
+//     document.body.removeChild(errorTemplate);
+//   }
+// });
+// errorTemplate.addEventListener('keydown', (evt) => {
+//   if (isEscapeKey(evt)) {
+//     evt.stopPropagation();
+//     document.body.removeChild(errorTemplate);
+//   }
+// });
 
 function openUploadForm () {
   openModal(imgUploadOverlayElement);
@@ -69,14 +80,12 @@ function openUploadForm () {
     if (!pristine.validate()) {
       return;
     }
-
+    console.log(evt.target);
     const formData = new FormData(evt.target);
     imgUploadButton.disabled = true;
     sendData(formData)
       .then(() => {
         document.body.append(successTemplate);
-        successTemplate.removeEventListener('keydown',onSuccessTemplateKeydown);
-        successTemplate.removeEventListener('click',onSuccessTemplateClickClose);
         successTemplate.addEventListener('keydown', onSuccessTemplateKeydown);
         successTemplate.addEventListener('click', onSuccessTemplateClickClose);
 
@@ -84,6 +93,8 @@ function openUploadForm () {
       })
       .catch(() => {
         document.body.append(errorTemplate);
+        errorTemplate.addEventListener('keydown', onErrorTemplateKeydown);
+        errorTemplate.addEventListener('click', onErrorTemplateClickClose);
       })
       .finally(() => {
         imgUploadButton.disabled = false;
