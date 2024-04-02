@@ -80,7 +80,6 @@ function openUploadForm () {
     if (!pristine.validate()) {
       return;
     }
-    console.log(evt.target);
     const formData = new FormData(evt.target);
     imgUploadButton.disabled = true;
     sendData(formData)
