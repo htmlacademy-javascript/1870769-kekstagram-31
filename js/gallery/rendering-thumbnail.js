@@ -20,9 +20,10 @@ const createPicture = ({ url, description, likes, comments, id }) => {
 };
 
 const getRenderingThumbnail = (data) => {
+  document.querySelectorAll('.picture').forEach((value) => value.remove());
   const fragment = document.createDocumentFragment();
 
-  data.forEach((dataElement) => {
+  data.slice().forEach((dataElement) => {
     fragment.append(createPicture(dataElement));
   });
 

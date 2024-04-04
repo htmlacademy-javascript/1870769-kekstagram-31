@@ -16,6 +16,7 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !imgUploadDescription.contains(document.activeElement) && !imgUploadHashtag.contains(document.activeElement)) {
     evt.preventDefault();
     closeUploadForm();
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
@@ -26,29 +27,27 @@ const onBigPictureClose = (evt) => {
 
 const onSuccessTemplateClickClose = (evt) => {
   if (evt.target.classList.contains('success__button') || evt.target.classList.contains('success')) {
-    document.body.removeChild(successTemplate);
-    closeModal(imgUploadOverlayElement);
-    closeSlider();
+    closeSuccessTemplate();
   }
 };
+
 const onSuccessTemplateKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-    document.body.removeChild(successTemplate);
-    closeModal(imgUploadOverlayElement);
-    closeSlider();
+    evt.preventDefault();
+    closeSuccessTemplate();
   }
 };
 
 const onErrorTemplateClickClose = (evt) => {
   if (evt.target.classList.contains('error__button') || evt.target.classList.contains('error')) {
-    document.body.removeChild(errorTemplate);
+    closeErrorTemplate();
   }
 };
+
 const onErrorTemplateKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-    document.body.removeChild(errorTemplate);
+    evt.preventDefault();
+    closeErrorTemplate();
   }
 };
 
@@ -58,49 +57,12 @@ const resetFormData = () => {
   document.querySelector('.img-upload__form').reset();
 };
 
-// errorTemplate.addEventListener('click', (evt) => {
-//   if (evt.target.classList.contains('error__button') || evt.target.classList.contains('error')) {
-//     document.body.removeChild(errorTemplate);
-//   }
-// });
-// errorTemplate.addEventListener('keydown', (evt) => {
-//   if (isEscapeKey(evt)) {
-//     evt.stopPropagation();
-//     document.body.removeChild(errorTemplate);
-//   }
-// });
-
 function openUploadForm () {
   openModal(imgUploadOverlayElement);
   initializeImageEffects();
 
-  document.querySelector('.img-upload__form').addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    if (!pristine.validate()) {
-      return;
-    }
-    const formData = new FormData(evt.target);
-    imgUploadButton.disabled = true;
-    sendData(formData)
-      .then(() => {
-        document.body.append(successTemplate);
-        successTemplate.addEventListener('keydown', onSuccessTemplateKeydown);
-        successTemplate.addEventListener('click', onSuccessTemplateClickClose);
-
-        resetFormData();
-      })
-      .catch(() => {
-        document.body.append(errorTemplate);
-        errorTemplate.addEventListener('keydown', onErrorTemplateKeydown);
-        errorTemplate.addEventListener('click', onErrorTemplateClickClose);
-      })
-      .finally(() => {
-        imgUploadButton.disabled = false;
-      });
-  });
-
   document.addEventListener('keydown', onDocumentKeydown);
+  document.querySelector('.img-upload__form').addEventListener('submit', handleSubmit);
   document.querySelector('.img-upload__cancel').addEventListener('click', onBigPictureClose);
   document.querySelector('.scale__control--bigger').addEventListener('click', clickControllBigger);
   document.querySelector('.scale__control--smaller').addEventListener('click', clickControllSmaller);
@@ -110,11 +72,52 @@ function closeUploadForm () {
   closeModal(imgUploadOverlayElement);
   closeSlider();
   resetFormData();
-  document.removeEventListener('keydown', onDocumentKeydown);
 
   document.querySelector('.img-upload__cancel').removeEventListener('click', onBigPictureClose);
   document.querySelector('.scale__control--bigger').removeEventListener('click', clickControllBigger);
   document.querySelector('.scale__control--smaller').removeEventListener('click', clickControllSmaller);
+}
+
+function closeSuccessTemplate () {
+  closeModal(imgUploadOverlayElement);
+  closeSlider();
+  document.body.removeChild(successTemplate);
+  document.removeEventListener('keydown', onSuccessTemplateKeydown);
+  successTemplate.removeEventListener('click', onSuccessTemplateClickClose);
+}
+
+function closeErrorTemplate () {
+  document.body.removeChild(errorTemplate);
+  document.removeEventListener('keydown', onErrorTemplateKeydown);
+  errorTemplate.removeEventListener('click', onErrorTemplateClickClose);
+  document.addEventListener('keydown', onDocumentKeydown);
+}
+
+function handleSubmit(evt) {
+  evt.preventDefault();
+
+  if (!pristine.validate()) {
+    return;
+  }
+  const formData = new FormData(evt.target);
+  imgUploadButton.disabled = true;
+  sendData(formData)
+    .then(() => {
+      document.body.append(successTemplate);
+      document.addEventListener('keydown', onSuccessTemplateKeydown);
+      successTemplate.addEventListener('click', onSuccessTemplateClickClose);
+      resetFormData();
+    })
+    .catch(() => {
+      document.body.append(errorTemplate);
+      document.addEventListener('keydown', onErrorTemplateKeydown);
+      errorTemplate.addEventListener('click', onErrorTemplateClickClose);
+    })
+    .finally(() => {
+      document.querySelector('.img-upload__form').removeEventListener('submit', handleSubmit);
+      document.removeEventListener('keydown', onDocumentKeydown);
+      imgUploadButton.disabled = false;
+    });
 }
 
 export { openUploadForm };
