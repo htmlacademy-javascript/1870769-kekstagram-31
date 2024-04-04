@@ -1,11 +1,18 @@
-import { openModal,closeModal } from '../util.js';
+import { openModal,closeModal, isEscapeKey } from '../util.js';
 import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
 
 const bigPictureContainerElement = document.querySelector('.big-picture');
 
-const onBigPictureClose = (evt) => {
+const onBigPictureClick = (evt) => {
   evt.preventDefault();
   closeBigPicture();
+};
+
+const onBigPictureKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
 };
 
 const renderBigPicture = (photo) => {
@@ -18,14 +25,16 @@ const renderBigPicture = (photo) => {
 };
 
 function openBigPicture (photoProfile) {
-  document.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClose);
+  document.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClick);
+  document.addEventListener('keydown', onBigPictureKeydown);
 
   openModal(bigPictureContainerElement);
   renderBigPicture(photoProfile);
 }
 
 function closeBigPicture () {
-  document.removeEventListener('click', onBigPictureClose);
+  document.removeEventListener('click', onBigPictureClick);
+  document.removeEventListener('keydown', onBigPictureKeydown);
 
   closeModal(bigPictureContainerElement);
   clearComments();
