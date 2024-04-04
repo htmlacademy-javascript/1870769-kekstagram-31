@@ -1,5 +1,5 @@
 import './form/form.js';
-import { loadImg } from'./form/load-img.js';
+import './form/load-img.js';
 import { setDiscussedClick, setRandomClick, setDefaultClick } from './gallery/filter-thumbnails.js';
 import { getRenderingThumbnail } from './gallery/rendering-thumbnail.js';
 import { openBigPicture } from './gallery/rendering-big-picture.js';
@@ -18,7 +18,6 @@ getData()
     setDiscussedClick(getRenderingThumbnail);
     setRandomClick(getRenderingThumbnail);
     setDefaultClick(getRenderingThumbnail);
-    loadImg();
     picturesElement.addEventListener('click', (evt) => {
       const targetElement = evt.target.closest('.picture');
 
