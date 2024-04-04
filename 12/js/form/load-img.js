@@ -4,24 +4,17 @@ const previewEffects = document.querySelectorAll('.effects__item span');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const loadImg = () => {
-  fileChooser.addEventListener('change', () => {
-    const file = fileChooser.files[0];
-    const fileName = file.name.toLowerCase();
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-    if (matches) {
-      preview.src = URL.createObjectURL(file);
-      previewEffects.forEach((effect) => {
-        effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
-      });
-    }
-  });
-};
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+    previewEffects.forEach((effect) => {
+      effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
+  }
+});
 
-const closeLoadImg = () => {
-
-};
-
-export { loadImg, closeLoadImg };
