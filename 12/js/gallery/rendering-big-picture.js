@@ -1,3 +1,4 @@
+import '../form/load-img.js';
 import { openModal,closeModal, isEscapeKey } from '../util.js';
 import { createBigPictureComment, clearComments } from './create-big-picture-comment.js';
 
@@ -25,7 +26,8 @@ const renderBigPicture = (photo) => {
 };
 
 function openBigPicture (photoProfile) {
-  document.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClick);
+  bigPictureContainerElement.querySelector('.big-picture__cancel').addEventListener('click', onBigPictureClick);
+
   document.addEventListener('keydown', onBigPictureKeydown);
 
   openModal(bigPictureContainerElement);
