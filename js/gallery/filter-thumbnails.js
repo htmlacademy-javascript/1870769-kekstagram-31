@@ -1,5 +1,5 @@
-import { getData } from '../api';
-import { getRandomInteger, debounce } from '../util';
+import { getData } from '../api.js';
+import { getRandomInteger, debounce } from '../util.js';
 
 const MAX_COUNT_SHOW_THUBNAILS = 10;
 
