@@ -71,14 +71,20 @@ const initializeEffects = (slidElem) => {
   });
 };
 
+let sliderInitialized = false;
+
 const initializeImageEffects = () => {
-  const slider = initializeSlider();
-  initializeEffects(slider);
+  if (!sliderInitialized) {
+    const slider = initializeSlider();
+    initializeEffects(slider);
+    sliderInitialized = true;
+  }
 };
 
 const closeSlider = () => {
-  sliderElement.noUiSlider.destroy();
-  effectListElements.querySelector('.effects__radio').checked = true;
+  if (sliderInitialized) {
+    sliderElement.noUiSlider.destroy();
+    sliderInitialized = false;
+  }
 };
-
 export { initializeImageEffects, closeSlider };

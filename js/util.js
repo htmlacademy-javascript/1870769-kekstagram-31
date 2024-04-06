@@ -18,7 +18,7 @@ const closeModal = (element) => {
   document.body.classList.remove('modal-open');
 };
 
-function debounce(callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);

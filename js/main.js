@@ -1,5 +1,4 @@
 import './form/form.js';
-import './form/load-img.js';
 import { setDiscussedClick, setRandomClick, setDefaultClick } from './gallery/filter-thumbnails.js';
 import { getRenderingThumbnail } from './gallery/rendering-thumbnail.js';
 import { openBigPicture } from './gallery/rendering-big-picture.js';

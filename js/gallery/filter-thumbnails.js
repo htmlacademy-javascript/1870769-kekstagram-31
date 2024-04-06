@@ -2,6 +2,7 @@ import { getData } from '../api.js';
 import { getRandomInteger, debounce } from '../util.js';
 
 const MAX_COUNT_SHOW_THUBNAILS = 10;
+const RERENDER_DELAY = 500;
 
 const buttonDefault = document.querySelector('#filter-default');
 const buttonRandom = document.querySelector('#filter-random');
@@ -30,7 +31,7 @@ const setDiscussedClick = (renderFunction) => {
     const debouncedRender = debounce(() => getData().then((data) => {
       const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
       renderFunction(sortedData);
-    }));
+    }, RERENDER_DELAY));
 
     debouncedRender();
   });
@@ -44,7 +45,7 @@ const setRandomClick = (renderFunction) => {
         const randomIndex = getUniqueRandomIndex(0, data.length - 1, MAX_COUNT_SHOW_THUBNAILS);
         const randomData = randomIndex.map((index) => data[index]);
         renderFunction(randomData);
-      }));
+      }, RERENDER_DELAY));
 
     debouncedRender();
   });
@@ -57,7 +58,7 @@ const setDefaultClick = (renderFunction) => {
     const debouncedRender = debounce(() => getData().then((data) => renderFunction(data)));
 
     debouncedRender();
-  });
+  }, RERENDER_DELAY);
 };
 
 export { setDiscussedClick, setRandomClick, setDefaultClick };

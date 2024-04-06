@@ -12,8 +12,9 @@ const pristine = new Pristine(uploadFormElement, {
   errorTextTag: 'div',
   errorClass: 'img-upload__field-wrapper--error'
 });
+const getHashtegs = (value) => value.trim().split(' ').filter((i) => !!i.trim());
 
-const isValidLengthHashtags = (value) => value.split(' ').length <= LIMIT_HASHTAG;
+const isValidLengthHashtags = (value) => getHashtegs(value).length <= LIMIT_HASHTAG;
 const isValidDescription = (value) => value.length <= LIMIT_DESCRIPTION_LENGTH;
 
 const isValidHashtags = (value) => {
@@ -21,10 +22,13 @@ const isValidHashtags = (value) => {
     return true;
   }
 
-  return value.trim().split(' ').every((hashtag) => patternHashtag.test(hashtag));
+  return getHashtegs(value).every((hashtag) => patternHashtag.test(hashtag));
 };
 
-const isUniqueHashtag = (value) => new Set(value.split(' ')).size === value.split(' ').length;
+const isUniqueHashtag = (value) => {
+  const lowercaseTags = getHashtegs(value.toLowerCase());
+  return new Set(lowercaseTags).size === lowercaseTags.length;
+};
 
 pristine.addValidator(hashtagElement, isValidLengthHashtags, `Хэштегов больше ${LIMIT_HASHTAG}`);
 pristine.addValidator(hashtagElement, isValidHashtags, 'введён невалидный хэштег');

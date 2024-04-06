@@ -11,9 +11,10 @@ fileChooser.addEventListener('change', () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    const objectURL = URL.createObjectURL(file);
+    preview.src = objectURL;
     previewEffects.forEach((effect) => {
-      effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+      effect.style.backgroundImage = `url(${objectURL})`;
     });
   }
 });
