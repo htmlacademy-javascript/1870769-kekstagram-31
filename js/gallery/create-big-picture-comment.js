@@ -26,7 +26,7 @@ const generateShowMoreCallback = ({ comments, fragment, commentsList }) => () =>
     commentsList.append(fragment);
   });
 
-  const commentShowLengthElements = document.querySelectorAll('.social__comment').length;
+  const commentShowLengthElements = bigPictureContainerElement.querySelectorAll('.social__comment').length;
   bigPictureContainerElement.querySelector('.social__comment-shown-count').textContent = commentShowLengthElements;
 
   if (commentShowLengthElements >= comments.length) {

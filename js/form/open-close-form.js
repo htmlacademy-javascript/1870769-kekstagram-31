@@ -5,15 +5,15 @@ import { pristine } from './validation-form.js';
 import { sendData } from '../api.js';
 
 const imgUploadFormElement = document.querySelector('.img-upload__form');
-const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
+const imgUploadOverlayElement = imgUploadFormElement.querySelector('.img-upload__overlay');
 const imgUploadButtonElement = imgUploadOverlayElement.querySelector('.img-upload__submit');
-const imgUploadCancelElement = document.querySelector('.img-upload__cancel');
+const imgUploadCancelElement = imgUploadOverlayElement.querySelector('.img-upload__cancel');
 
 const imgUploadDescriptionElement = imgUploadOverlayElement.querySelector('.text__description');
 const imgUploadHashtagElement = imgUploadOverlayElement.querySelector('.text__hashtags');
 
-const imgUploadControlBiggerElement = document.querySelector('.scale__control--bigger');
-const imgUploadControlSmallerElement = document.querySelector('.scale__control--smaller');
+const imgUploadControlBiggerElement = imgUploadOverlayElement.querySelector('.scale__control--bigger');
+const imgUploadControlSmallerElement = imgUploadOverlayElement.querySelector('.scale__control--smaller');
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');

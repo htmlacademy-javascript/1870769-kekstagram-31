@@ -1,10 +1,13 @@
 import { EffectsSetting } from './enum-effects.js';
 
-const sliderElement = document.querySelector('.effect-level__slider');
-const valueElement = document.querySelector('.effect-level__value');
-const previewImage = document.querySelector('.img-upload__preview img');
-const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectLevelContainerElement = document.querySelector('.img-upload__effect-level');
+const sliderElement = effectLevelContainerElement.querySelector('.effect-level__slider');
+const valueElement = effectLevelContainerElement.querySelector('.effect-level__value');
+
+const previewImageElement = document.querySelector('.img-upload__preview img');
 const effectListElements = document.querySelector('.effects__list');
+
+let sliderInitialized = false;
 
 const initializeSlider = () => {
   noUiSlider.create(sliderElement, {
@@ -27,22 +30,23 @@ const initializeSlider = () => {
       },
     },
   });
+
   return sliderElement;
 };
 
 const initializeEffects = (slidElem) => {
   slidElem.noUiSlider.on('update', () => {
     const value = slidElem.noUiSlider.get();
-    const selectedEffectElement = document.querySelector('.effects__radio:checked');
+    const selectedEffectElement = effectListElements.querySelector('.effects__radio:checked');
     const selectedEffect = selectedEffectElement ? selectedEffectElement.value : 'none';
     valueElement.value = value;
 
     if (selectedEffect === 'none') {
-      previewImage.style.filter = 'none';
-      effectLevelContainer.style.display = 'none';
+      previewImageElement.style.filter = 'none';
+      effectLevelContainerElement.style.display = 'none';
     } else {
       const { filter, unit } = EffectsSetting[selectedEffect.toUpperCase()];
-      previewImage.style.filter = `${filter}(${value}${unit})`;
+      previewImageElement.style.filter = `${filter}(${value}${unit})`;
     }
   });
 
@@ -50,12 +54,12 @@ const initializeEffects = (slidElem) => {
     const selectedEffect = evt.target.value;
 
     if (selectedEffect === 'none') {
-      effectLevelContainer.style.display = 'none';
-      previewImage.style.filter = '';
+      effectLevelContainerElement.style.display = 'none';
+      previewImageElement.style.filter = '';
       sliderElement.noUiSlider.set(100);
       valueElement.value = 100;
     } else {
-      effectLevelContainer.style.display = 'block';
+      effectLevelContainerElement.style.display = 'block';
       const { maxLimit, minLimit, start, step } = EffectsSetting[selectedEffect.toUpperCase()];
       sliderElement.noUiSlider.updateOptions({
         range: {
@@ -71,8 +75,6 @@ const initializeEffects = (slidElem) => {
   });
 };
 
-let sliderInitialized = false;
-
 const initializeImageEffects = () => {
   if (!sliderInitialized) {
     const slider = initializeSlider();
@@ -87,4 +89,5 @@ const closeSlider = () => {
     sliderInitialized = false;
   }
 };
+
 export { initializeImageEffects, closeSlider };

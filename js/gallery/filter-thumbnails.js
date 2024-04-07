@@ -4,14 +4,14 @@ import { getRandomInteger, debounce } from '../util.js';
 const MAX_COUNT_SHOW_THUBNAILS = 10;
 const RERENDER_DELAY = 500;
 
-const buttonDefault = document.querySelector('#filter-default');
-const buttonRandom = document.querySelector('#filter-random');
-const buttonDiscussed = document.querySelector('#filter-discussed');
+const buttonDefaultElement = document.querySelector('#filter-default');
+const buttonRandomElement = document.querySelector('#filter-random');
+const buttonDiscussedElement = document.querySelector('#filter-discussed');
 
-const imgFilterButtons = document.querySelectorAll('.img-filters__button');
+const imgFilterButtonsElements = document.querySelectorAll('.img-filters__button');
 
 const updateActiveFilterButtonStyles = (evt) => {
-  imgFilterButtons.forEach((button) => {
+  imgFilterButtonsElements.forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
   evt.target.classList.add('img-filters__button--active');
@@ -26,7 +26,7 @@ const getUniqueRandomIndex = (min, max, count) => {
 };
 
 const setDiscussedClick = (renderFunction) => {
-  buttonDiscussed.addEventListener('click', (evt) => {
+  buttonDiscussedElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
     const debouncedRender = debounce(() => getData().then((data) => {
       const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
@@ -38,7 +38,7 @@ const setDiscussedClick = (renderFunction) => {
 };
 
 const setRandomClick = (renderFunction) => {
-  buttonRandom.addEventListener('click', (evt) => {
+  buttonRandomElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
     const debouncedRender = debounce(() => getData()
       .then((data) => {
@@ -53,7 +53,7 @@ const setRandomClick = (renderFunction) => {
 };
 
 const setDefaultClick = (renderFunction) => {
-  buttonDefault.addEventListener('click', (evt) => {
+  buttonDefaultElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
     const debouncedRender = debounce(() => getData().then((data) => renderFunction(data)));
 
