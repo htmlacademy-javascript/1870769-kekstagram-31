@@ -1,7 +1,4 @@
 import { setDiscussedClick, setRandomClick, setDefaultClick } from './filter-thumbnails.js';
-import { debounce } from '../util.js';
-
-const TIMEOUT_DELAY = 500;
 
 const pictureContainerElement = document.querySelector('.pictures');
 const pictureTeamplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -35,17 +32,14 @@ const getThumbnail = (data) => {
   pictureContainerElement.append(fragment);
 };
 
-const renderThumbnailsDebounced = debounce(getThumbnail, TIMEOUT_DELAY);
-
 const getRenderingThumbnail = (data) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
+  setDefaultClick(getThumbnail);
+  setRandomClick(getThumbnail);
+  setDiscussedClick(getThumbnail);
+
   getThumbnail(data);
-
-  setDefaultClick((defaultData) => renderThumbnailsDebounced(defaultData));
-  setRandomClick((randomData) => renderThumbnailsDebounced(randomData));
-  setDiscussedClick((sortedData) => renderThumbnailsDebounced(sortedData));
-
 };
 
 export { getRenderingThumbnail };
