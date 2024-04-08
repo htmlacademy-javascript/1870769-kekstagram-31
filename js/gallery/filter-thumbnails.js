@@ -28,10 +28,11 @@ const getUniqueRandomIndex = (min, max, count) => {
 const setDiscussedClick = (renderFunction) => {
   buttonDiscussedElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
-    const debouncedRender = debounce(() => getData().then((data) => {
-      const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
-      renderFunction(sortedData);
-    }, RERENDER_DELAY));
+    const debouncedRender = debounce(() => getData()
+      .then((data) => {
+        const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
+        renderFunction(sortedData);
+      }, RERENDER_DELAY));
 
     debouncedRender();
   });
