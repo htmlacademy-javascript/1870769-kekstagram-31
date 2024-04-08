@@ -1,5 +1,5 @@
-const LIMIT_HASHTAG = 5;
-const patternHashtag = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_HASHTAG_LIMIT = 5;
+const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const LIMIT_DESCRIPTION_LENGTH = 140;
 
 const uploadFormElement = document.querySelector('.img-upload__form');
@@ -13,31 +13,31 @@ const pristine = new Pristine(uploadFormElement, {
   errorClass: 'img-upload__field-wrapper--error'
 });
 
-const getHashtegs = (value) =>
+const getHashtags = (value) =>
   value
     .trim()
     .split(' ')
     .filter((i) => !!i.trim());
 
-const isValidLengthHashtegs = (value) => getHashtegs(value).length <= LIMIT_HASHTAG;
+const isValidHashtagLength = (value) => getHashtags(value).length <= MAX_HASHTAG_LIMIT;
 const isValidDescription = (value) => value.length <= LIMIT_DESCRIPTION_LENGTH;
 
-const isValidHashtags = (value) => {
+const isValidHashtagFormat = (value) => {
   if (value === '') {
     return true;
   }
 
-  return getHashtegs(value).every((hashtag) => patternHashtag.test(hashtag));
+  return getHashtags(value).every((hashtag) => HASHTAG_PATTERN.test(hashtag));
 };
 
-const isUniqueHashteg = (value) => {
-  const lowercaseTags = getHashtegs(value.toLowerCase());
+const isUniqueHashtags = (value) => {
+  const lowercaseTags = getHashtags(value.toLowerCase());
   return new Set(lowercaseTags).size === lowercaseTags.length;
 };
 
-pristine.addValidator(hashtagElement, isValidLengthHashtegs, `Хэштегов больше ${LIMIT_HASHTAG}`);
-pristine.addValidator(hashtagElement, isValidHashtags, 'введён невалидный хэштег');
-pristine.addValidator(hashtagElement, isUniqueHashteg, 'Хэштеги повторяются');
+pristine.addValidator(hashtagElement, isValidHashtagLength, `Хэштегов больше ${MAX_HASHTAG_LIMIT}`);
+pristine.addValidator(hashtagElement, isValidHashtagFormat, 'введён невалидный хэштег');
+pristine.addValidator(hashtagElement, isUniqueHashtags, 'Хэштеги повторяются');
 
 pristine.addValidator(textDescriptionElement, isValidDescription, 'Комментарий слишком длинный');
 

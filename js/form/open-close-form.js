@@ -19,7 +19,11 @@ const successTemplate = document.querySelector('#success').content.querySelector
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && !imgUploadDescriptionElement.contains(document.activeElement) && !imgUploadHashtagElement.contains(document.activeElement)) {
+  if (
+    isEscapeKey(evt)
+      && !imgUploadDescriptionElement.contains(document.activeElement)
+      && !imgUploadHashtagElement.contains(document.activeElement)
+  ) {
     evt.preventDefault();
     closeUploadForm();
     document.removeEventListener('keydown', onDocumentKeydown);
@@ -95,6 +99,8 @@ function closeErrorTemplate () {
   document.removeEventListener('keydown', onErrorTemplateKeydown);
   errorTemplate.removeEventListener('click', onErrorTemplateClickClose);
   imgUploadOverlayElement.classList.remove('hidden');
+
+  document.addEventListener('keydown', onDocumentKeydown);
 }
 
 function handleSubmit(evt) {
@@ -119,6 +125,7 @@ function handleSubmit(evt) {
       document.body.append(errorTemplate);
       document.addEventListener('keydown', onErrorTemplateKeydown);
       errorTemplate.addEventListener('click', onErrorTemplateClickClose);
+      document.removeEventListener('keydown', onDocumentKeydown);
     })
     .finally(() => {
       imgUploadButtonElement.disabled = false;

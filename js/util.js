@@ -1,3 +1,5 @@
+const TIMEOUT_DELAY = 500;
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -18,7 +20,7 @@ const closeModal = (element) => {
   document.body.classList.remove('modal-open');
 };
 
-function debounce (callback, timeoutDelay = 500) {
+function debounce (callback, timeoutDelay = TIMEOUT_DELAY) {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
