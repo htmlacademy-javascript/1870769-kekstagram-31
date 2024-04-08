@@ -25,41 +25,46 @@ const getUniqueRandomIndex = (min, max, count) => {
   return Array.from(index);
 };
 
+const renderDiscussed = debounce((renderFunction) => {
+  getData()
+    .then((data) => {
+      const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
+      renderFunction(sortedData);
+    });
+}, RERENDER_DELAY);
+
+const renderRandom = debounce((renderFunction) => {
+  getData()
+    .then((data) => {
+      const randomIndex = getUniqueRandomIndex(0, data.length - 1, MAX_COUNT_SHOW_THUBNAILS);
+      const randomData = randomIndex.map((index) => data[index]);
+      renderFunction(randomData);
+    });
+}, RERENDER_DELAY);
+
+const renderDefault = debounce((renderFunction) => {
+  getData().then((data) => renderFunction(data));
+}, RERENDER_DELAY);
+
 const setDiscussedClick = (renderFunction) => {
   buttonDiscussedElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
-    const debouncedRender = debounce(() => getData()
-      .then((data) => {
-        const sortedData = data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
-        renderFunction(sortedData);
-      }, RERENDER_DELAY));
-
-    debouncedRender();
+    renderDiscussed(renderFunction);
   });
 };
 
 const setRandomClick = (renderFunction) => {
   buttonRandomElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
-    const debouncedRender = debounce(() => getData()
-      .then((data) => {
-        const randomIndex = getUniqueRandomIndex(0, data.length - 1, MAX_COUNT_SHOW_THUBNAILS);
-        const randomData = randomIndex.map((index) => data[index]);
-        renderFunction(randomData);
-      }, RERENDER_DELAY));
-
-    debouncedRender();
+    renderRandom(renderFunction);
   });
-
 };
 
 const setDefaultClick = (renderFunction) => {
   buttonDefaultElement.addEventListener('click', (evt) => {
     updateActiveFilterButtonStyles(evt);
-    const debouncedRender = debounce(() => getData().then((data) => renderFunction(data)));
-
-    debouncedRender();
-  }, RERENDER_DELAY);
+    renderDefault(renderFunction);
+  });
 };
 
 export { setDiscussedClick, setRandomClick, setDefaultClick };
